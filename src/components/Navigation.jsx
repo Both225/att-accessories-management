@@ -7,21 +7,37 @@ import {
   HiOutlineClock,
   HiOutlineBell,
 } from "react-icons/hi2";
+import { useState } from "react";
 
 const items = [
   { value: "/", label: "Dashboard", icon: HiOutlineHome },
   { value: "sell", label: "Sell accessory", icon: HiOutlineShoppingCart },
   { value: "stock", label: "Stock", icon: HiOutlineCube },
-  { value: "add-accessory", label: "Add accessory", icon: HiOutlinePlusCircle },
+  {
+    value: "add-accessories",
+    label: "Add accessory",
+    icon: HiOutlinePlusCircle,
+  },
   { value: "sell-history", label: "Sell history", icon: HiOutlineClock },
   { value: "reminder", label: "Reminder", icon: HiOutlineBell },
 ];
 
 function Navigation() {
+  const [selectedItem, setSelectedItem] = useState("Dashboard");
+
+  function onSelect(selectedItem) {
+    setSelectedItem(selectedItem);
+  }
+
   return (
-    <ul>
+    <ul className="space-y-3">
       {items.map((item) => (
-        <NavigationItem item={item} key={item.value} />
+        <NavigationItem
+          item={item}
+          key={item.value}
+          onSelect={onSelect}
+          selectedItem={selectedItem}
+        />
       ))}
     </ul>
   );
@@ -29,12 +45,21 @@ function Navigation() {
 
 export default Navigation;
 
-function NavigationItem({ item }) {
+function NavigationItem({ item, onSelect, selectedItem }) {
   const { value, label, icon: Icon } = item;
+
+  const isSelected = selectedItem === label;
+
   return (
-    <li>
-      <Link to={value} className="flex items-center gap-3">
-        <Icon size={20} className="text-indigo-600" />
+    <li
+      className={`${isSelected ? "bg-secondary text-primary" : "bg-transparent font-normal"} hover:bg-secondary/40 rounded-lg py-4 pl-5 font-medium`}
+    >
+      <Link
+        onClick={() => onSelect(label)}
+        to={value}
+        className="flex items-center gap-3"
+      >
+        <Icon size={20} className={`${isSelected ? "text-indigo-600" : ""}`} />
         <span>{label}</span>
       </Link>
     </li>
