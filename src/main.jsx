@@ -10,6 +10,11 @@ import Stock from "./pages/Stock";
 import AddAccessories from "./pages/AddAccessories";
 import Reminder from "./pages/Reminder";
 import SellHistory from "./pages/SellHistory";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "react-hot-toast";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -46,6 +51,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <Toaster position="bottom-right" toastOptions={{ duration: 3000 }} />
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   </StrictMode>,
 );

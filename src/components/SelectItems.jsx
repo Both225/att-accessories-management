@@ -1,13 +1,13 @@
 import { Select } from "antd";
 
-function SelectItems({ placeholder, width = 200, options, onChange }) {
+function SelectItems({ placeholder, options, onChange }) {
   return (
     <Select
       placeholder={placeholder}
       allowClear
-      style={{ width: width }}
       onChange={onChange}
       options={options}
+      className="sm:w-[10rem] md:w-[14rem] lg:w-[20rem]"
     />
   );
 }

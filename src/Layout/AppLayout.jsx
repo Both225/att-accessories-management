@@ -4,7 +4,7 @@ import Header from "../components/Header";
 
 function AppLayout() {
   return (
-    <div className="bg-surface text-text grid h-full w-full grid-cols-[25rem_1fr] grid-rows-[5rem_1fr]">
+    <div className="bg-surface text-text grid h-full w-full grid-rows-[5rem_1fr] md:grid-cols-[20rem_1fr] md:text-[1.4rem] lg:grid-cols-[30rem_1fr]">
       <Sidebar />
       <Header />
       <Outlet />
