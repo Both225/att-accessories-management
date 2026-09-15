@@ -1,9 +1,9 @@
-import ActionDropdownModal from "../components/ActionDropDownModal";
+import ButtonModal from "../components/ButtonModal";
 
 function Dashboard() {
   return (
     <div className="bg-surface-darker px-12 py-8">
-      <ActionDropdownModal />
+      <ButtonModal />
     </div>
   );
 }
