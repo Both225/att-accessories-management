@@ -1,20 +1,37 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getProducts } from "../../services/apiProducts";
 import toast from "react-hot-toast";
+import { useSearchParams } from "react-router-dom";
+import { PAGE_SIZE } from "../../utils/contains";
 
 export function useInventory() {
+  const [searchParams] = useSearchParams();
+  const queryClient = useQueryClient();
+
+  const page = Number(searchParams.get("page") || 1);
+
   const {
     isLoading,
-    data: products,
+    data: { products, count } = {},
     error,
   } = useQuery({
-    queryKey: ["inventory"],
-    queryFn: getProducts,
+    queryKey: ["inventory", page],
+    queryFn: () => getProducts({ page }),
   });
+
+  // Prefetch data
+  const countPage = Math.ceil(count / PAGE_SIZE);
+
+  if (page < countPage) {
+    queryClient.query({
+      queryFn: () => getProducts({ page }),
+      queryKey: ["inventory", page + 1],
+    });
+  }
 
   if (error) {
     toast("Can't not load products");
   }
 
-  return { isLoading, products };
+  return { isLoading, products, count };
 }

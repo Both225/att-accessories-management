@@ -1,3 +1,4 @@
+import { PAGE_SIZE } from "../utils/contains";
 import supabase from "./supabase";
 
 export async function addProduct(newProduct) {
@@ -14,15 +15,23 @@ export async function addProduct(newProduct) {
   return product;
 }
 
-export async function getProducts() {
-  const { data: products, error } = await supabase.from("products").select("*");
+export async function getProducts({ page }) {
+  let query = supabase.from("products").select("*", { count: "exact" });
+
+  if (page) {
+    const from = (page - 1) * PAGE_SIZE;
+    const to = page * PAGE_SIZE - 1;
+    query = query.range(from, to);
+  }
+
+  const { data: products, error, count } = await query;
 
   if (error) {
     console.log(error);
     throw new Error(error);
   }
 
-  return products;
+  return { products, count };
 }
 
 export async function updateProduct({ productId, updateData }) {
@@ -30,7 +39,8 @@ export async function updateProduct({ productId, updateData }) {
     .from("products")
     .update(updateData)
     .eq("id", Number(productId))
-    .select();
+    .select()
+    .single();
 
   if (error) {
     console.log(error);
