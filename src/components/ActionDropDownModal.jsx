@@ -7,7 +7,7 @@ import {
   ExclamationCircleOutlined,
 } from "@ant-design/icons";
 
-const ActionDropdownModal = ({ editForm }) => {
+const ActionDropdownModal = ({ editForm, handleDelete }) => {
   // State to manage modal visibility and type
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState(null); // 'edit' or 'delete'
@@ -36,6 +36,7 @@ const ActionDropdownModal = ({ editForm }) => {
 
   // Handle Delete Confirm
   const handleDeleteConfirm = () => {
+    handleDelete();
     setIsModalOpen(false);
   };
 

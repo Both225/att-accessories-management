@@ -25,3 +25,15 @@ export async function updateProduct({ productId, updateData }) {
 
   return updatedProduct;
 }
+
+export async function deleteProduct({ productId }) {
+  const { error } = await supabase
+    .from("products")
+    .delete()
+    .eq("id", productId);
+
+  if (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+}
