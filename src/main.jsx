@@ -7,7 +7,7 @@ import RouterError from "./pages/RouterError";
 import Dashboard from "./pages/Dashboard";
 import SellAccessories from "./pages/SellAccessories";
 import Inventory from "./pages/Inventory";
-import AddAccessories from "./pages/AddAccessories";
+import Setting from "./pages/Setting";
 import Reminder from "./pages/Reminder";
 import SellHistory from "./pages/SellHistory";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -34,16 +34,16 @@ const router = createBrowserRouter([
         element: <Inventory />,
       },
       {
-        path: "/add-accessories",
-        element: <AddAccessories />,
-      },
-      {
         path: "/sell-history",
         element: <SellHistory />,
       },
       {
         path: "/reminder",
         element: <Reminder />,
+      },
+      {
+        path: "/setting",
+        element: <Setting />,
       },
     ],
   },
