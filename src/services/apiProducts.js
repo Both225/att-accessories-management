@@ -10,3 +10,18 @@ export async function getProducts() {
 
   return products;
 }
+
+export async function updateProduct({ productId, updateData }) {
+  const { data: updatedProduct, error } = await supabase
+    .from("products")
+    .update(updateData)
+    .eq("id", Number(productId))
+    .select();
+
+  if (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+
+  return updatedProduct;
+}

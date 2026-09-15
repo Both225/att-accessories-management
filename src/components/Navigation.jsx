@@ -12,7 +12,7 @@ import { useState } from "react";
 const items = [
   { value: "/", label: "Dashboard", icon: HiOutlineHome },
   { value: "sell", label: "Sell accessory", icon: HiOutlineShoppingCart },
-  { value: "stock", label: "Stock", icon: HiOutlineCube },
+  { value: "inventory", label: "Inventory", icon: HiOutlineCube },
   {
     value: "add-accessories",
     label: "Add accessory",

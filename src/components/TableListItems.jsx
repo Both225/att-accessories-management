@@ -1,9 +1,9 @@
 import TableRow from "./TableRow";
 
-function TableListItems({ items }) {
+function TableListItems({ products = [] }) {
   return (
     <ul>
-      {items.map((item) => (
+      {products.map((item) => (
         <TableRow item={item} key={item.id} />
       ))}
     </ul>

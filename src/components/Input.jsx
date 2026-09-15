@@ -10,12 +10,14 @@ export const Input = React.forwardRef(
       className = "",
       accept,
       onChange,
+      style,
       ...props
     },
     ref,
   ) => {
     return (
       <input
+        style={style}
         accept={accept}
         onChange={onChange}
         ref={ref}
