@@ -1,4 +1,4 @@
-import { modelOptions } from "../helper/selectOptions";
+import { modelOptions, sortByOptions } from "../helper/selectOptions";
 import SelectItems from "./SelectItems";
 
 function FilterBar({ categoryOptions }) {
@@ -14,7 +14,12 @@ function FilterBar({ categoryOptions }) {
         placeholder={"Filter by model"}
         filterField={"model"}
       />
-      <SelectItems placeholder={"Sortby"} width={150} />
+      <SelectItems
+        options={sortByOptions}
+        placeholder={"Sortby"}
+        width={150}
+        filterField={"sortBy"}
+      />
     </div>
   );
 }

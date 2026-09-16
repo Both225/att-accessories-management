@@ -13,8 +13,6 @@ function SelectItems({ placeholder, options, filterField }) {
       searchParams.delete(filterField);
     }
 
-    console.log(searchParams.get(filterField));
-
     setSearchParams(searchParams);
   };
 

@@ -11,14 +11,19 @@ export function useInventory() {
   const page = Number(searchParams.get("page") || 1);
   const category = searchParams.get("category") || "all";
   const model = searchParams.get("model") || "all";
+  const sortByRaw = searchParams.get("sortBy") || "unit_price-asc";
+
+  const [field, direction] = sortByRaw.split("-");
+
+  const sortBy = { field, direction };
 
   const {
     isLoading,
     data: { products, count } = {},
     error,
   } = useQuery({
-    queryKey: ["inventory", page, category, model],
-    queryFn: () => getProducts({ page, category, model }),
+    queryKey: ["inventory", page, category, model, sortBy],
+    queryFn: () => getProducts({ page, category, model, sortBy }),
   });
 
   // Prefetch data

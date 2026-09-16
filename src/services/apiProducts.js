@@ -15,7 +15,7 @@ export async function addProduct(newProduct) {
   return product;
 }
 
-export async function getProducts({ page, category, model }) {
+export async function getProducts({ page, category, model, sortBy }) {
   let query = supabase.from("products").select("*", { count: "exact" });
 
   // Filter by model
@@ -27,6 +27,12 @@ export async function getProducts({ page, category, model }) {
   if (category && category !== "all") {
     query = query.eq("category", category);
   }
+
+  // SortBy
+  if (sortBy && sortBy !== "all")
+    query = query.order(sortBy.field, {
+      ascending: sortBy.direction === "asc",
+    });
 
   // Pagination
   if (page) {
