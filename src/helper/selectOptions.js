@@ -3,3 +3,9 @@ export const categoryOptions = [
   { value: "battery", label: "Battery" },
   { value: "case", label: "Case" },
 ];
+
+export const modelOptions = [
+  { value: "iPhone", label: "iPhone" },
+  { value: "Samsung", label: "Samsung" },
+  { value: "Vivo", label: "Vivo" },
+];

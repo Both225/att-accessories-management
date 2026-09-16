@@ -10,14 +10,15 @@ export function useInventory() {
 
   const page = Number(searchParams.get("page") || 1);
   const category = searchParams.get("category") || "all";
+  const model = searchParams.get("model") || "all";
 
   const {
     isLoading,
     data: { products, count } = {},
     error,
   } = useQuery({
-    queryKey: ["inventory", page, category],
-    queryFn: () => getProducts({ page, category }),
+    queryKey: ["inventory", page, category, model],
+    queryFn: () => getProducts({ page, category, model }),
   });
 
   // Prefetch data
