@@ -10,17 +10,11 @@ import InventoryAddForm from "../features/inventory/InventoryAddForm";
 
 import { categoryOptions } from "../helper/selectOptions";
 import Pagination from "../components/Pagination";
-import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
 
 function Inventory() {
   const { isLoading, products, count } = useInventory();
-  const [searchParams, setSearchParams] = useSearchParams();
 
-  useEffect(() => {
-    // This will overwrite ?page=2 back to ?page=1 on every reload!
-    setSearchParams({ page: 1 });
-  }, []);
+  console.log(products);
 
   if (isLoading) return <Spinner />;
   return (

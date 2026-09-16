@@ -1,19 +1,29 @@
 import { Select } from "antd";
 import { useSearchParams } from "react-router-dom";
 
-function SelectItems({ placeholder, options }) {
+function SelectItems({ placeholder, options, filterField }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  function handleClick() {
-    searchParams.set("page", 1);
+  const currentValue = searchParams.get(filterField) || null;
+
+  const handleChange = (value) => {
+    if (value) {
+      searchParams.set(filterField, value);
+    } else {
+      searchParams.delete(filterField);
+    }
+
+    console.log(searchParams.get(filterField));
+
     setSearchParams(searchParams);
-  }
+  };
 
   return (
     <Select
       placeholder={placeholder}
       allowClear
-      onChange={handleClick}
+      value={currentValue}
+      onChange={handleChange}
       options={options}
       className="sm:w-[10rem] md:w-[14rem] lg:w-[20rem]"
     />

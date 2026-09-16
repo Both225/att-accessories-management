@@ -15,8 +15,12 @@ export async function addProduct(newProduct) {
   return product;
 }
 
-export async function getProducts({ page }) {
+export async function getProducts({ page, category }) {
   let query = supabase.from("products").select("*", { count: "exact" });
+
+  if (category && category !== "all") {
+    query = query.eq("category", category);
+  }
 
   if (page) {
     const from = (page - 1) * PAGE_SIZE;
@@ -30,6 +34,8 @@ export async function getProducts({ page }) {
     console.log(error);
     throw new Error(error);
   }
+
+  if (!category) return { products, count };
 
   return { products, count };
 }

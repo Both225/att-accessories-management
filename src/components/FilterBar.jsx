@@ -6,6 +6,7 @@ function FilterBar({ categoryOptions }) {
       <SelectItems
         options={categoryOptions}
         placeholder={"Filter by category"}
+        filterField={"category"}
       />
       <SelectItems placeholder={"Filter by model"} />
       <SelectItems placeholder={"Sortby"} width={150} />
