@@ -1,9 +1,9 @@
-import Pagination from "../components/Pagination";
+import SearchField from "../components/SearchField";
 
 function Dashboard() {
   return (
     <div className="bg-surface-darker px-12 py-8">
-      <Pagination />
+      <SearchField />
     </div>
   );
 }

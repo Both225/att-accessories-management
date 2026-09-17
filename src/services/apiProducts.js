@@ -15,8 +15,12 @@ export async function addProduct(newProduct) {
   return product;
 }
 
-export async function getProducts({ page, category, model, sortBy }) {
-  let query = supabase.from("products").select("*", { count: "exact" });
+export async function getProducts({ page, category, model, sortBy, name }) {
+  let query = supabase
+    .from("products")
+    .select("id, name, unit_price, image, category, stock_quantity, model", {
+      count: "exact",
+    });
 
   // Filter by model
   if (model && model !== "all") {
@@ -41,6 +45,10 @@ export async function getProducts({ page, category, model, sortBy }) {
     query = query.range(from, to);
   }
 
+  if (name) {
+    query = query.ilike("name", `%${name.trim()}%`);
+  }
+
   const { data: products, error, count } = await query;
 
   if (error) {
@@ -51,6 +59,21 @@ export async function getProducts({ page, category, model, sortBy }) {
   if (!category) return { products, count };
 
   return { products, count };
+}
+
+export async function getProduct({ name }) {
+  const { data: product, error } = await supabase
+    .from("products")
+    .eq("name", name)
+    .select()
+    .single();
+
+  if (error) {
+    console.log(error);
+    throw new Error(error);
+  }
+
+  return product;
 }
 
 export async function updateProduct({ productId, updateData }) {
