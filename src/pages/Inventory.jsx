@@ -19,14 +19,13 @@ function Inventory() {
 
   function handleSearch(value) {
     searchParams.set("name", value);
+    searchParams.set("page", 1);
     setSearchParams(searchParams);
   }
 
   function handleClearSearch() {
     searchParams.delete("name");
   }
-
-  console.log(products);
 
   if (isLoading) return <Spinner />;
   return (

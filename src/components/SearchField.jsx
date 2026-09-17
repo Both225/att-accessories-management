@@ -26,7 +26,6 @@ function SearchField({
         value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
         onSearch={onSearch}
-        allowClear
         enterButton
       />
 
