@@ -56,3 +56,18 @@ export async function addSale(sale) {
 
   return data;
 }
+
+export async function updatePaid({ id, paid }) {
+  const { data, error } = await supabase
+    .from("sales")
+    .update({ isPaid: paid })
+    .eq("id", id)
+    .select("isPaid");
+
+  if (error) {
+    console.log(error);
+    throw new Error("Can't add sale");
+  }
+
+  return data;
+}

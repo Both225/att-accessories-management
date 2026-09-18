@@ -19,7 +19,7 @@ export function useGetSales() {
     data: products,
     error,
   } = useQuery({
-    queryKey: ["history", isPaid, isPaidRaw, selectedDate],
+    queryKey: ["sales", isPaid, isPaidRaw, selectedDate],
     queryFn: () => getSalesApi({ isPaid, isPaidRaw, selectedDate }),
   });
 
