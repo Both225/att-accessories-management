@@ -1,15 +1,20 @@
+import SelectItems from "../../components/SelectItems";
 import Calendar from "./Calendar";
 import Dropdown from "./DropDownCalendar";
 
 const filterField = [
-  { key: "paid", label: "Paid" },
-  { key: "noPaid", label: "No paid" },
+  { value: "paid", label: "Paid" },
+  { value: "noPaid", label: "No paid" },
 ];
 
 function FilterField() {
   return (
     <div className="flex justify-between">
-      <Dropdown placeholder={"Filter by"} items={filterField} />
+      <SelectItems
+        options={filterField}
+        placeholder={"Filter by status"}
+        filterField={"isPaid"}
+      />
       <Dropdown
         placeholder={"Filter by date"}
         items={[{ key: 1, label: <Calendar /> }]}

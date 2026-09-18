@@ -1,7 +1,7 @@
 import { Select } from "antd";
 import { useSearchParams } from "react-router-dom";
 
-function SelectItems({ placeholder, options, filterField, onClear }) {
+function SelectItems({ placeholder, options, filterField }) {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const currentValue = searchParams.get(filterField) || null;

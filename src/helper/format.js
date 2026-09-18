@@ -17,4 +17,27 @@ const formatCurrency = (value, currency = "USD", locale = "en-US") => {
   }).format(value);
 };
 
-export { bookDate, daysAgo, nightsToStay, formatCurrency };
+function formatHourMinute(data) {
+  const date = new Date(data);
+  const cambodiaTime = date.toLocaleTimeString("en-US", {
+    timeZone: "Asia/Phnom_Penh",
+    hour12: true,
+    hour: "numeric",
+    minute: "2-digit",
+  });
+
+  return cambodiaTime;
+}
+function formatDate(date) {
+  const b = date ? new Date(date).toISOString().split("T")[0] : null;
+  return b;
+}
+
+export {
+  bookDate,
+  daysAgo,
+  nightsToStay,
+  formatCurrency,
+  formatHourMinute,
+  formatDate,
+};
