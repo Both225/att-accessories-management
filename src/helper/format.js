@@ -33,6 +33,22 @@ function formatDate(date) {
   return b;
 }
 
+function FormattedDateAndTime(date) {
+  const isoString = date;
+
+  const formattedDate = new Date(isoString)
+    .toLocaleString("en-GB", {
+      timeZone: "Asia/Phnom_Penh",
+      day: "numeric",
+      month: "short",
+      hour: "numeric",
+      hour12: true,
+    })
+    .replace(":00", "");
+
+  return formattedDate;
+}
+
 export {
   bookDate,
   daysAgo,
@@ -40,4 +56,5 @@ export {
   formatCurrency,
   formatHourMinute,
   formatDate,
+  FormattedDateAndTime,
 };

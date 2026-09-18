@@ -1,23 +1,14 @@
-import { Button, Checkbox, Dropdown, Input } from "antd";
+import { Button, Checkbox, Dropdown, Input, Space } from "antd";
 import Title from "../components/Title";
 import { HiTrash } from "react-icons/hi2";
+import { useReminders } from "../features/reminder/useReminders";
+import Spinner from "../components/Spinner";
+import { FormattedDateAndTime } from "../helper/format";
+import { useState } from "react";
+import { useAddReminder } from "../features/reminder/useAddReminder";
+import { useDeleteReminder } from "../features/reminder/useDeleteReminder";
 
 const { TextArea } = Input;
-
-const items = [
-  {
-    id: 1,
-    name: "Clean the office",
-    priority: "High priority",
-    createdAt: "10/Sep/2026 17:45",
-  },
-  {
-    id: 1,
-    name: "Clean the office",
-    priority: "High priority",
-    createdAt: "10/Sep/2026 17:45",
-  },
-];
 
 function Reminder() {
   return (
@@ -31,14 +22,31 @@ function Reminder() {
 export default Reminder;
 
 function AddReminder() {
+  const { isAdding, addReminder } = useAddReminder();
+
+  const [name, setName] = useState("");
+  const [priority, setPriority] = useState("");
+
   const priorityOptions = [
     {
-      value: "low-priority",
+      key: "low-priority",
       label: "Low priority",
     },
-    { value: "medium-priority", label: "Medium priority" },
-    { value: "high-priority", label: "High Priority" },
+    { key: "medium-priority", label: "Medium priority" },
+    { key: "high-priority", label: "High Priority" },
   ];
+
+  function handleMenuClick({ key }) {
+    setPriority(key);
+  }
+
+  function handleAddItem() {
+    addReminder({ name, priority });
+    setName("");
+    setPriority("");
+  }
+
+  if (isAdding) return <Spinner />;
 
   return (
     <div className="h-fit">
@@ -46,13 +54,24 @@ function AddReminder() {
         <p className="text-center text-[2rem] font-semibold">Add Reminders</p>
         <div className="grid grid-cols-[10rem_1fr] gap-y-8 text-[1.4rem]">
           <p>Reminder</p>
-          <TextArea rows={4} placeholder="Add reminder" />
+          <TextArea
+            rows={4}
+            placeholder="Add reminder"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
           <p>Priority</p>
-          <Dropdown trigger={"click"} menu={{ items: priorityOptions }}>
-            <Button>Choose priority</Button>
+          <Dropdown
+            trigger={"click"}
+            menu={{ items: priorityOptions, onClick: handleMenuClick }}
+          >
+            <Button>
+              <Space>{priority ? priority : "Choose priority"}</Space>
+            </Button>
           </Dropdown>
         </div>
         <Button
+          onClick={handleAddItem}
           variant="solid"
           style={{ backgroundColor: "#6366f1", width: "100%" }}
         >
@@ -64,10 +83,14 @@ function AddReminder() {
 }
 
 function MainReminder() {
+  const { isLoading, reminders } = useReminders();
+
+  if (isLoading) return <Spinner />;
+
   return (
     <div className="bg-surface space-y-6 rounded-lg px-10 py-8 shadow-sm">
       <Title>Reminder</Title>
-      <ReminderList items={items} />
+      <ReminderList items={reminders} />
     </div>
   );
 }
@@ -85,7 +108,7 @@ function ReminderList({ items }) {
       </div>
       <ul>
         {items.map((item) => (
-          <ReminderItem item={item} />
+          <ReminderItem item={item} key={item.id} />
         ))}
       </ul>
     </div>
@@ -93,19 +116,24 @@ function ReminderList({ items }) {
 }
 
 function ReminderItem({ item }) {
-  const { id, name, createdAt, priority } = item;
+  const { id, name, created_at, priority } = item;
+  const { isDeleting, deleteReminder } = useDeleteReminder();
 
-  function onChange() {}
+  function handleDeleteReminder() {
+    deleteReminder({ id });
+  }
+
+  if (isDeleting) return <Spinner />;
 
   return (
     <li className="grid grid-cols-[repeat(2,5rem)_repeat(3,1fr)_5rem] items-center justify-center border-b border-b-gray-200 p-5 text-[1.4rem]">
-      <Checkbox onChange={onChange}></Checkbox>
+      <Checkbox onChange={() => {}}></Checkbox>
       <p>{id}</p>
       <p>{name}</p>
       <p>{priority}</p>
-      <p>{createdAt}</p>
+      <p>{FormattedDateAndTime(created_at)}</p>
       <div>
-        <Button color="danger" variant="solid">
+        <Button onClick={handleDeleteReminder} color="danger" variant="solid">
           <HiTrash className="text-white" />
         </Button>
       </div>
