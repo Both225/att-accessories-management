@@ -61,12 +61,14 @@ export async function getProducts({ page, category, model, sortBy, name }) {
   return { products, count };
 }
 
-export async function getProduct({ name }) {
-  const { data: product, error } = await supabase
-    .from("products")
-    .eq("name", name)
-    .select()
-    .single();
+export async function getProduct({ productId }) {
+  let query = supabase.from("products").select();
+
+  if (productId) {
+    query.eq("id", productId).single();
+  }
+
+  const { data: product, error } = await query;
 
   if (error) {
     console.log(error);

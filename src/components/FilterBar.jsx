@@ -1,19 +1,24 @@
-import { modelOptions, sortByOptions } from "../helper/selectOptions";
+import {
+  modelOptions,
+  sortByOptions,
+  categoryOptions,
+} from "../helper/selectOptions";
 import SelectItems from "./SelectItems";
 
-function FilterBar({ categoryOptions }) {
+function FilterBar() {
   return (
     <div className="flex md:gap-5 lg:gap-8">
-      <SelectItems
-        options={categoryOptions}
-        placeholder={"Filter by category"}
-        filterField={"category"}
-      />
       <SelectItems
         options={modelOptions}
         placeholder={"Filter by model"}
         filterField={"model"}
       />
+      <SelectItems
+        options={categoryOptions}
+        placeholder={"Filter by category"}
+        filterField={"category"}
+      />
+
       <SelectItems
         options={sortByOptions}
         placeholder={"Sortby"}

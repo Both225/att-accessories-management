@@ -23,7 +23,7 @@ function SelectItems({ placeholder, options, filterField, onClear }) {
       value={currentValue}
       onChange={handleChange}
       options={options}
-      className="sm:w-[10rem] md:w-[14rem] lg:w-[20rem]"
+      className="sm:w-40 md:w-56 lg:w-[20rem]"
     />
   );
 }
