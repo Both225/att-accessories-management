@@ -11,16 +11,30 @@ function SellHistory() {
 
   if (isLoading) return <Spinner />;
 
-  if (!products) return <p>No product</p>;
+  const hasProducts = products.length !== 0;
+
+  console.log(products.length, hasProducts);
 
   return (
     <div className="bg-surface-darker p-8">
       <div className="bg-surface space-y-6 rounded-lg px-10 py-8 shadow-sm">
-        <Title>Sell history</Title>
-        <FilterField />
-        <HistoryTableHeader />
-        <ProductList products={products} />
-        <p>Date : {formatDate(products[0].created_at)}</p>
+        {hasProducts ? (
+          <>
+            <Title>Sell history</Title>
+            <FilterField />
+            <HistoryTableHeader />
+            <ProductList products={products} />
+            <p>Date : {formatDate(products[0]?.created_at)}</p>
+          </>
+        ) : (
+          <>
+            <Title>Sell history</Title>
+            <FilterField />
+            <div className="flex h-200 items-center justify-center text-[2.4rem] font-semibold">
+              <p>No sales history to show</p>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

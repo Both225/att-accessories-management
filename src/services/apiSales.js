@@ -1,6 +1,6 @@
 import supabase from "./supabase";
 
-export async function getSales({ isPaid, isPaidRaw }) {
+export async function getSales({ isPaid, isPaidRaw, selectedDate }) {
   let query = supabase
     .from("sales")
     .select(
@@ -9,6 +9,13 @@ export async function getSales({ isPaid, isPaidRaw }) {
 
   if (isPaid === true || (isPaid === false && isPaidRaw !== "all")) {
     query = query.eq("isPaid", isPaid);
+  }
+
+  const startOfDay = `${selectedDate}T00:00:00.000Z`;
+  const endOfDay = `${selectedDate}T23:59:59.999Z`;
+
+  if (selectedDate) {
+    query = query.gte("created_at", startOfDay).lte("created_at", endOfDay);
   }
 
   const { data: sales, error } = await query;
@@ -45,24 +52,6 @@ export async function addSale(sale) {
   if (error) {
     console.log(error);
     throw new Error("Can't add sale");
-  }
-
-  return data;
-}
-
-export async function fetchSalesByDate({ selectedDateStr }) {
-  const startOfDay = `${selectedDateStr}T00:00:00.000Z`;
-  const endOfDay = `${selectedDateStr}T23:59:59.999Z`;
-
-  const { data, error } = await supabase
-    .from("sales")
-    .select()
-    .gte("created_at", startOfDay)
-    .lte("created_at", endOfDay);
-
-  if (error) {
-    console.log(error);
-    throw new Error("can't not fetch data by date");
   }
 
   return data;

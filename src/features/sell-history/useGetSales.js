@@ -10,13 +10,17 @@ export function useGetSales() {
 
   const isPaid = isPaidRaw === "paid" ? true : isPaidRaw === "noPaid" && false;
 
+  const today = new Date().toISOString().split("T")[0];
+
+  const selectedDate = searchParams.get("date") || today;
+
   const {
     isLoading,
     data: products,
     error,
   } = useQuery({
-    queryKey: ["history", isPaid, isPaidRaw],
-    queryFn: () => getSalesApi({ isPaid, isPaidRaw }),
+    queryKey: ["history", isPaid, isPaidRaw, selectedDate],
+    queryFn: () => getSalesApi({ isPaid, isPaidRaw, selectedDate }),
   });
 
   if (error) {

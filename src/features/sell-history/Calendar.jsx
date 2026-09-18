@@ -1,20 +1,13 @@
-import { useQuery } from "@tanstack/react-query";
 import { Calendar as CalendarApi, theme } from "antd";
-import { fetchSalesByDate } from "../../services/apiSales";
-import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 
 function Calendar() {
-  const [selectedDate, setSelectedDate] = useState(null);
-
-  const { isLoading, data: soldProducts = [] } = useQuery({
-    queryKey: ["sales", selectedDate],
-    queryFn: () => fetchSalesByDate(selectedDate),
-    enabled: !!selectedDate,
-  });
+  const [searchParams, setSearchParams] = useSearchParams();
 
   function handleSelectDate(date) {
     const formattedDate = date.format("YYYY-MM-DD");
-    setSelectedDate(formattedDate);
+    searchParams.set("date", formattedDate);
+    setSearchParams(searchParams);
   }
 
   const { token } = theme.useToken();
